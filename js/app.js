@@ -1,6 +1,8 @@
 let rightAnswers = 0;
 let wrongAnswers = 0;
 let correctInARow = 0;
+let level = 1;
+let MAX_RIGHT_ANSWERS = 10;
 
 class Question {
     operand1;
@@ -11,8 +13,9 @@ class Question {
 
     constructor() {
         this.operator = new Operator("-+".substr(getRandomInt(0, 2), 1));
-        this.operand1 = new Operand(getRandomInt(-10, 10),{operation: this.operator.value, order: 1});    
-        this.operand2 = new Operand(getRandomInt(-10, 10),{operation: this.operator.value, order: 2});    
+        const numberFrom = level * 10;
+        this.operand1 = new Operand(getRandomInt(-numberFrom, numberFrom),{operation: this.operator.value, order: 1});    
+        this.operand2 = new Operand(getRandomInt(-numberFrom, numberFrom),{operation: this.operator.value, order: 2});    
         //this.operand1 = new Operand(-8, {bracket: 0, sign: 1, absolute: 1});    
         //this.operand2 = new Operand(9, {bracket: 0, sign: 0, absolute: 0});    
         this.answers = new Set();
@@ -22,6 +25,7 @@ class Question {
 
 
     show = () => {
+        
         const operand1 = $('#operand1');
         const operand2 = $('#operand2');
         const operator = $('.operator');
@@ -58,9 +62,13 @@ class Question {
         this.answers.add(-a4);
 
         this.answers = new Set([...this.answers].sort(() => Math.random() - 0.5));
+        function removeListener() {
+
+            document.querySelectorAll('.choice').forEach(choice => choice.removeEventListener('click', checkAnswer));
+        }
+
+        removeListener();
         
-        
-        document.querySelectorAll('.choice').forEach(choice => choice.removeEventListener('click', checkAnswer));
 
         const choices = $('.choices');
                             
@@ -75,10 +83,16 @@ class Question {
         function checkAnswer(e) {
             
             if(+e.target.getAttribute('v') === that.answer) {
+                removeListener();
                 rightAnswers++;
-                correctInARow++;
+                if(rightAnswers>MAX_RIGHT_ANSWERS) {
+                    MAX_RIGHT_ANSWERS += level * 5;
+                    level++;
+                    rightAnswers = 0;
+                }
+                wrongAnswers>0 && correctInARow++;
                 if(correctInARow > 3) {
-                    correctInARow = 0;
+                    correctInARow = -1;
                     if(wrongAnswers > 0) {
                         wrongAnswers--;
                     }
@@ -89,13 +103,15 @@ class Question {
                 }, 1000);
             } else {
                 wrongAnswers++;
-                correctInARow = 0;
+                correctInARow = -1;
                 e.target.classList.add('wrong');
             }
             updateScore();
         }
 
         function updateScore() {
+            $('#progress-bar').style.width = (rightAnswers / (MAX_RIGHT_ANSWERS)) * 100 + "%";
+            $('#level').innerText = level;
             $('#correct').innerText = rightAnswers;
             $('#wrong').innerText = wrongAnswers;
             $('#row').innerText = "";
