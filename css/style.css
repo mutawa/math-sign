@@ -1,198 +1,201 @@
 body {
-  background-color: #f0f0f0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 2em;
-  color: #000000;
-  margin: 0px;
-  padding: 0px;
-}
-
-.wrapper {
-  margin: 0px auto;
-  max-width: 800px;
-  height: 100%;
-  background-color: #f0f0f0;
-}
-
-.question {
-  max-width: 700px;
-}
-.question-text {
-  display: flex;
-
-  /* align-items: center; */
-  justify-content: center;
-}
-
-.question-text div {
-  text-align: center;
-}
-
-.operator,
-.equals {
-  height: 100%;
-  font-size: 2em;
-  font-weight: bold;
-  color: #000000;
-  line-height: 1.4em;
-}
-
-.operand {
-  position: relative;
-  top: 5px;
-  text-align: center;
-
-  height: 100%;
-  font-size: 2em;
-  font-weight: bold;
-  color: #000000;
-  /*
+    background-color: #f0f0f0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    color: #000000;
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  .wrapper {
+    margin: 0px auto;
+    max-width: 800px;
+    height: 100%;
+    background-color: #f0f0f0;
+  }
+  
+  .question {
+    max-width: 700px;
+  }
+  .question-text {
+    display: flex;
+  
+    /* align-items: center; */
+    justify-content: center;
+  }
+  
+  .question-text div {
+    text-align: center;
+  }
+  
+  .operator,
+  .equals {
+    height: 100%;
+    font-size: 2em;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.4em;
+  }
+  
+  .operand {
+    position: relative;
+    top: 5px;
+    text-align: center;
+  
+    height: 100%;
+    font-size: 2em;
+    font-weight: bold;
+    color: #000000;
+    /*
+      background-color: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      */
+    margin: 0px;
+    padding: 0 0.25em;
+  }
+  
+  .minus,
+  .plus,
+  .bar,
+  .bracket {
+    display: inline-block;
+  }
+  
+  .bracket.open::after,
+  .bracket.closed::after {
+    position: relative;
+    font-weight: 100;
+    top: -10px;
+  }
+  
+  .bracket.open::after {
+    content: "(";
+  }
+  .bracket.closed::after {
+    content: ")";
+  }
+  
+  .minus::after {
+    content: "-";
+    position: relative;
+    font-weight: 100;
+    top: -10px;
+  }
+  .plus::after {
+    content: "+";
+    font-size: 0.8em;
+    font-weight: 100;
+    position: relative;
+    top: -10px;
+  }
+  
+  .bar::after {
+    content: " ";
+    border-right: 0.05em solid #000000;
+    font-size: 1em;
+    font-weight: 100;
+    position: relative;
+    top: -5px;
+  }
+  
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 0.5em;
+    grid-auto-rows: 1fr;
+  }
+  
+  .choice {
+    cursor: pointer;
+    text-align: center;
+  
+    height: 100%;
+    font-size: 2em;
+    font-weight: bold;
+    color: #000000;
     background-color: #ffffff;
     border: 1px solid #000000;
     border-radius: 5px;
-    */
-  margin: 0px;
-  padding: 0 0.25em;
-}
-
-.minus,
-.plus,
-.bar,
-.bracket {
-  display: inline-block;
-}
-
-.bracket.open::after,
-.bracket.closed::after {
-  position: relative;
-  font-weight: 100;
-  top: -10px;
-}
-
-.bracket.open::after {
-  content: "(";
-}
-.bracket.closed::after {
-  content: ")";
-}
-
-.minus::after {
-  content: "-";
-  position: relative;
-  font-weight: 100;
-  top: -10px;
-}
-.plus::after {
-  content: "+";
-  font-size: 0.8em;
-  font-weight: 100;
-  position: relative;
-  top: -10px;
-}
-
-.bar::after {
-  content: " ";
-  border-right: 0.05em solid #000000;
-  font-size: 1em;
-  font-weight: 100;
-  position: relative;
-  top: -5px;
-}
-
-.choices {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 0.5em;
-  grid-auto-rows: 1fr;
-}
-
-.choice {
-  cursor: pointer;
-  text-align: center;
-
-  height: 100%;
-  font-size: 2em;
-  font-weight: bold;
-  color: #000000;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  margin: 0px;
-  padding: 0.125em;
-}
-
-.choice:hover {
-  background-color: #def;
-  /* outline: 2px solid #000; */
-}
-
-.choice:active {
-  background-color: gold;
-}
-
-.choice .minus {
-  pointer-events: none;
-}
-
-.choice.correct {
-  background-color: #bada55;
-}
-
-.choice.wrong {
-  background-color: #ff5555;
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.status {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: black;
-  color: white;
-  padding: 1em 0;
-  font-size: 0.75em;
-}
-
-.status #correct {
-  background-color: #bada55;
-  color: darkgreen;
-  padding: 0 1em;
-  border-radius: 5px;
-}
-
-.status #wrong {
-  background-color: #ff5555;
-  color: darkred;
-  border-radius: 5px;
-  padding: 0 1em;
-}
-.level {
-  padding: 1em;
-}
-
-.level-progress {
-  display: flex;
-  flex-wrap: wrap;
-
-  border: 1px solid #000000;
-  border-radius: 5px;
-  color: white;
-  padding: 0 0;
-  font-size: 0.75em;
-}
-
-.progress-bar {
-  display: inline-block;
-  background-color: #bada55;
-  color: darkgreen;
-  border-radius: 5px;
-  width: 0%;
-  height: 1em;
-}
-
-@media (hover: none) {
-  .choice {
-    background-color: white;
+    margin: 0px;
+    padding: 0.125em;
   }
-}
+  
+  .choice:hover {
+    background-color: #def;
+    /* outline: 2px solid #000; */
+  }
+  
+  .choice:active {
+    background-color: gold;
+  }
+  
+  .choice .minus {
+    pointer-events: none;
+  }
+  
+  .choice.correct {
+    background-color: #bada55;
+  }
+  
+  .choice.wrong {
+    background-color: #ff5555;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  .status {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: black;
+    color: white;
+    padding: 1em 0;
+    font-size: 0.5em;
+  }
+  
+  .status #correct {
+      font-size: 1.5em;
+    background-color: #bada55;
+    color: darkgreen;
+    padding: 0 1em;
+    border-radius: 5px;
+  }
+  
+  .status #wrong {
+    font-size: 1.5em;
+    background-color: #ff5555;
+    color: darkred;
+    border-radius: 5px;
+    padding: 0 1em;
+  }
+  .level {
+      
+    padding: 1em;
+    font-size: .5em;
+  }
+  
+  .level-progress {
+    display: flex;
+    flex-wrap: wrap;
+  
+    border: 1px solid #000000;
+    border-radius: 5px;
+    color: white;
+    padding: 0 0;
+    font-size: 0.75em;
+  }
+  
+  .progress-bar {
+    display: inline-block;
+    background-color: #bada55;
+    color: darkgreen;
+    border-radius: 5px;
+    width: 0%;
+    height: 1em;
+  }
+  
+  .level-text span {
+      display: inline-block;
+    font-weight: bold;
+  }

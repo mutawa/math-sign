@@ -7,17 +7,32 @@
     <link rel="stylesheet" href="css/style.css">
     <title>تدريب جمع وطرح الأعداد </title>
 </head>
-<body dir="rtl">
+<body dir="rtl" onload="loadData()">
     <div class="wrapper">
+        
+        <a href="..">
+            
+            عودة
+        </a>
         <div class="status">
             <div>
-                إجابات صحيحة: <span id="correct">0</span>
+                إجابات صحيحة: <span id="correct"></span>
             </div>
             <div>
-                إجابات خاطئة: <span id="wrong">0</span>
+                إجابات خاطئة: <span id="wrong"></span>
             </div>
             <div id="row">
-
+            </div>
+        </div>
+        <div class="level">
+            
+            <div class="level-text">
+                <span>المستوى:</span>
+                <span id="level">1</span>
+            </div>
+            <div class="level-progress">
+                <div class="progress-bar" id="progress-bar">
+                </div>
             </div>
         </div>
         <div class="question">
@@ -32,15 +47,7 @@
 
             </div>
             <div class="choices"></div>
-            <div class="level">
-                <div class="level-text">
-                    <span>المستوى:</span>
-                    <span id="level">1</span>
-                </div>
-                <div class="level-progress">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-            </div>
+            
         </div>
     </div>
     <script src="js/app.js"></script>

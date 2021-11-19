@@ -1,8 +1,13 @@
+let currentQuestion;
+let totalAnswers = 0;
 let rightAnswers = 0;
 let wrongAnswers = 0;
 let correctInARow = 0;
 let level = 1;
 let MAX_RIGHT_ANSWERS = 10;
+
+document.addEventListener("load", loadData);
+
 
 class Question {
     operand1;
@@ -85,6 +90,7 @@ class Question {
             if(+e.target.getAttribute('v') === that.answer) {
                 removeListener();
                 rightAnswers++;
+                totalAnswers++;
                 if(rightAnswers>MAX_RIGHT_ANSWERS) {
                     MAX_RIGHT_ANSWERS += level * 5;
                     level++;
@@ -109,21 +115,24 @@ class Question {
             updateScore();
         }
 
-        function updateScore() {
-            $('#progress-bar').style.width = (rightAnswers / (MAX_RIGHT_ANSWERS)) * 100 + "%";
-            $('#level').innerText = level;
-            $('#correct').innerText = rightAnswers;
-            $('#wrong').innerText = wrongAnswers;
-            $('#row').innerText = "";
-            for(let i = 0; i < correctInARow; i++) {
-                $('#row').innerText += "🎉";
-            }
-        }
+        
 
         //answer.innerHTML = this.answer;
         //console.table(this.answers);
     }
 
+}
+
+function updateScore() {
+    storeData();
+    $('#progress-bar').style.width = (rightAnswers / (MAX_RIGHT_ANSWERS)) * 100 + "%";
+    $('#level').innerText = level.arb();
+    $('#correct').innerText = totalAnswers.arb();
+    $('#wrong').innerText = wrongAnswers.arb();
+    $('#row').innerText = "";
+    for(let i = 0; i < correctInARow; i++) {
+        $('#row').innerText += "🎉";
+    }
 }
 
 class Operator {
@@ -259,18 +268,52 @@ function getRandomInt(min, max) {
 }
 
 function ask() {
-    const q = new Question();
-    q.show();
+    currentQuestion = new Question();
+    currentQuestion.show();
 
 
 }
-
-
-ask();
-
 
 document.addEventListener('keydown', (e) => {
     if(e.keyCode === 13) {
         ask();
     }
 });
+
+
+
+function loadData() {
+    
+    const data = localStorage.getItem("data");
+    if(data) {
+        const d = JSON.parse(data);
+        rightAnswers = d.rightAnswers;
+        wrongAnswers = d.wrongAnswers;
+        totalAnswers = d.totalAnswers;
+        level = d.level;
+        correctInARow = d.correctInARow;
+        MAX_RIGHT_ANSWERS = d.MAX_RIGHT_ANSWERS;
+        currentQuestion = d.currentQuestion;
+    
+        updateScore();
+        
+    }
+    ask();
+}
+
+function storeData() {
+    
+    const data = {
+        rightAnswers,
+        wrongAnswers,
+        totalAnswers,
+        level,
+        correctInARow,
+        MAX_RIGHT_ANSWERS,
+        
+        
+    };
+    localStorage.setItem("data", JSON.stringify(data));
+}
+
+
